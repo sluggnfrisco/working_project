@@ -7,12 +7,12 @@ class Texter
   attr_reader :client, :contacts, :default_from
 
   def initialize
-    environment = YAML.load_file('application.yml')
-    account_sid = environment['TWILIO_ACCOUNT_SID']
-    auth_token = environment['TWILIO_AUTH_TOKEN']
+    ENV = YAML.load_file('application.yml')
+    account_sid = ENV['TWILIO_ACCOUNT_SID']
+    auth_token = ENV['TWILIO_AUTH_TOKEN']
 
     @client = Twilio::REST::Client.new(account_sid, auth_token)
-    @contacts = environment['contact_book']
+    @contacts = ENV['contact_book']
     @default_from = @contacts['me']
   end
 
@@ -33,7 +33,6 @@ class Texter
     message_hash[:media_url] = media_url if media_url
 
     self.client.account.messages.create(message_hash)
-    puts "Sent message to #{to_num}"
   end
 end
 
