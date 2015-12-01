@@ -7,12 +7,12 @@ class Texter
   attr_reader :client, :contacts, :default_from
 
   def initialize
-    ENV = YAML.load_file('application.yml')
-    account_sid = ENV['TWILIO_ACCOUNT_SID']
-    auth_token = ENV['TWILIO_AUTH_TOKEN']
+    environment = YAML.load_file('application.yml')
+    account_sid = environment['TWILIO_ACCOUNT_SID']
+    auth_token = environment['TWILIO_AUTH_TOKEN']
 
     @client = Twilio::REST::Client.new(account_sid, auth_token)
-    @contacts = ENV['contact_book']
+    @contacts = environment['contact_book']
     @default_from = @contacts['me']
   end
 
